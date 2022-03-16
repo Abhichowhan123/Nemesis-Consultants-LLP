@@ -1,0 +1,66 @@
+{% extends "./base.html" %}
+{% block title %} Home  {% endblock %}
+
+{% block content %}
+<div class="container  mt-5">
+  <h2>Managing Attendance </h2>
+
+    {% if manage %}
+    <table class="table table-dark table-hover">
+       <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+              <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Password</th>
+            <th scope="col">Action</th>
+            <th scope="col">Attendence Statuse</th>
+
+          </tr>
+       </thead>
+  <tbody>
+      {% for i in manage %}
+    <tr>
+          <th scope="row">{{i.id }}</th>
+          <td>{{i.Name}}</td>
+          <td>{{i.Username}}</td>
+          <td>{{i.Email}}</td>
+          <td>{{i.Phone}}</td>
+          <td>{{i.Password}}</td>
+          <td>
+
+              <a class="control" href="{% url 'updatedata' i.id %}" >
+                <input type="submit" class="btn btn-primary" value="Edit">
+              </a>
+
+            <form action="{% url 'deletedata' i.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+              <a class="control">
+                <input type="submit" class="btn btn-warning" value="Delete">
+              </a>
+            </form>
+
+          </td>
+          <td>
+            <input type="radio" name="" value="Present">Present
+            <input type="radio" name="" value="Absent">Absent
+          </td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+
+            </table>
+            <input type="submit" name="submit" class="btn btn-primary" value="submit">
+
+
+    {% else %}
+    <h4 class="text-center alert-warning">No Data</h4>
+
+    {% endif %}
+
+
+
+{% endblock content %}
